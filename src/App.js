@@ -1,24 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Compose from "./compose";
+
+//StyleComponents
+import GlobalStyle from "./styles/GlobalStyle";
+
+//IMPORT CONTEXT PROVIDER
+import AuthProvider from "./contexts/AuthContext";
+import FirebaseProvider from "./contexts/FirebaseContext";
+import ArticlesProvider from "./contexts/ArticlesContext";
+import QuizProvaider from "./contexts/QuizContext";
+import ResourcesProvaider from "./contexts/ResourcesContext";
+import ModalProvider from "./contexts/ModalContext";
+import AlertProvider from "./contexts/AlertContext";
+
+//COMPONENTS
+//Layout components
+import Home from "./views/Home"
+import Page from "./views/Page"
+import ScrollTopArrow from "./components/navigation/ScrollTopArrow"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyle />
+      <ScrollTopArrow/>
+      <Compose
+        components={[
+          Router,
+          
+          AlertProvider,
+          AuthProvider,
+          FirebaseProvider,
+          ModalProvider,
+          QuizProvaider,
+          ArticlesProvider,
+          ResourcesProvaider,
+        ]}
+      >
+        <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/:id" component={Page} />
+        <Page/>
+      </Switch>
+      
+      </Compose>
+    </>
   );
 }
 
